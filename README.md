@@ -44,8 +44,8 @@ Welcome to my professional portfolio! This site showcases my work in **AI Develo
 
 ## 📬 Contact Me
 * **Email:** [nahyanashraf3878@gmail.com](mailto:nahyanashraf3878@gmail.com)
-* **LinkedIn:** [Your Profile Link Here]
-* **Instagram:** [@YourHandle]
+* **LinkedIn:** [https://www.linkedin.com/in/mohammed-nahyan-ashraf-98800b223/]
+* **Instagram:** [https://www.instagram.com/nahyan_ashraf?igsh=Y3E2eHN3cDNtY21m]
 
 ---
 © 2026 Mohammed Nahyan Ashraf. All Rights Reserved.
