@@ -3,7 +3,7 @@
 Welcome to my professional portfolio! This site showcases my work in **AI Development**, **Data Analysis**, and **Software Engineering**. It is designed with a focus on clean aesthetics, interactive user experience, and high-performance code.
 
 ## 🌐 Live Demo
-[View my Portfolio](https://Nahyan2003.github.io/My_Portfolio/)
+[View my Portfolio](https://Nahyan2003.github.io/My-Portfolio/)
 
 ---
 
