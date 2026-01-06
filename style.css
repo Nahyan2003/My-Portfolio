@@ -1,0 +1,861 @@
+:root {
+    --bg-color: #f8f8f8;
+    --accent-color: #000000;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    overflow-x: hidden;
+}
+
+/* --- NAVIGATION BAR --- */
+.navbar {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 15px 40px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    /* Remove transform from here so the whole bar stays still */
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 0.9rem;
+    position: relative; /* Needed for the underline position */
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+}
+
+/* Individual Content Moves Upward */
+.nav-item:hover {
+    transform: translateY(-5px); /* Moves Home, About, etc. UP individually */
+    color: #000;
+}
+
+/* Small line under each content */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #000;
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after {
+    width: 100%; /* Line grows from left to right on hover */
+}
+
+/* --- HERO SECTION --- */
+.hero-section {
+    width: 100%;
+    height: 65vh;
+    position: relative;
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-img {
+    width: 100%;
+    height: 150%;
+    object-fit: cover;
+    filter: grayscale(100%);
+}
+
+.title-overlay {
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+}
+
+.main-name {
+    font-size: clamp(3rem, 12vw, 8rem);
+    font-weight: 900;
+}
+
+.white-text { color: white; }
+.black-text { color: rgba(0,0,0,0.8); margin-left: -10px; }
+
+/* --- PAGE 1 CONTENT --- */
+.content-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 10%;
+}
+
+.role-header h2, .role-header h3 {
+    margin-bottom: -10px;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #1a1a1a;
+}
+
+.bio-text {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin: 25px 0 50px 0;
+    color: #444;
+}
+
+/* --- RESUME BUTTON --- */
+.resume-oval {
+    display: inline-flex;
+    padding: 25px 60px;
+    background-color: var(--accent-color);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 100px;
+    font-weight: 700;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.resume-oval:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* --- CONTACT & SOCIAL BAR --- */
+.contact-social-bar {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+/* Left Side: Contact Styling */
+.contact-info-left {
+    display: flex;
+    gap: 35px; 
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    cursor: none !important; /* Hides default mouse */
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+}
+
+.contact-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    pointer-events: none; 
+}
+
+.contact-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    letter-spacing: -0.2px;
+    pointer-events: none;
+}
+
+/* Right Side: Social Icons Styling */
+.social-icons-right {
+    display: flex;
+    flex-direction: row; /* Force horizontal alignment */
+    gap: 15px;
+    align-items: center;
+}
+
+.social-icon-link {
+    display: flex; /* Changed from inline-block for better alignment */
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+    filter: grayscale(100%);
+    cursor: none !important; /* Hides default mouse for custom cursor */
+}
+
+.social-icon-link:hover {
+    transform: translateY(-8px);
+    filter: grayscale(0%);
+}
+
+.social-icon-link img {
+    width: 28px;
+    height: 28px;
+    pointer-events: none;
+}
+
+/* --- Responsive Fix --- */
+@media (max-width: 800px) { /* Lowered threshold so it doesn't stack too early */
+    .contact-social-bar {
+        flex-direction: column;
+        gap: 30px;
+        align-items: center; /* Center everything on mobile */
+        text-align: center;
+    }
+    
+    .contact-info-left {
+        flex-direction: column; /* Stacks email and phone on mobile */
+        gap: 20px;
+        align-items: center;
+    }
+
+    .social-icons-right {
+        justify-content: center;
+    }
+}
+
+/* --- PAGE 2: WHO I AM (CLEAN WIDE STYLE) --- */
+
+.about-section {
+    min-height: 100vh;
+    padding: 120px 10%; /* The 10% horizontal padding you requested */
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.about-top-meta {
+    margin-bottom: 20px;
+}
+
+.about-title {
+    font-size: clamp(3.5rem, 12vw, 7rem);
+    font-weight: 900;
+    margin-bottom: 5px;
+    letter-spacing: -3px;
+    line-height: 1;
+}
+
+.padding-note {
+    color: #999;
+    font-size: 1.1rem;
+    margin-bottom: 60px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.about-description-wide {
+    width: 100%;
+    max-width: 1200px; /* Limits width just enough so lines aren't TOO long to read */
+}
+
+.about-description-wide p {
+    font-size: 1.1rem; /* Larger font size for that 'big' feel */
+    line-height: 1.7;   /* Clean line spacing */
+    color: #444;
+    margin-bottom: 40px; /* Space between the long paragraphs */
+    text-align: left;    /* Keeps the modern clean-left edge */
+    word-spacing: 1px;
+}
+
+/* Scroll Animation Consistency */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.scroll-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .about-content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* --- PAGE 3: PERSONAL SKILLS --- */
+
+.skills-section {
+    min-height: 100vh;
+    padding: 100px 10%;
+    background-color: #f8f8f8;
+    display: flex;
+    align-items: center;
+}
+
+.skills-container {
+    width: 100%;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr; /* Text on left, Circles on right */
+    gap: 80px;
+    align-items: center;
+}
+
+/* Left Side Styling */
+.skills-title {
+    font-size: clamp(3.5rem, 10vw, 6rem);
+    font-weight: 900;
+    line-height: 0.9;
+    margin-bottom: 50px;
+    letter-spacing: -2px;
+}
+
+.skills-description p {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: #333;
+    text-transform: uppercase; /* Matches screenshot style */
+    max-width: 90%;
+}
+
+/* Right Side: Circular Badges */
+.skills-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.skill-circle {
+    width: 180px;
+    height: 180px;
+    background-color: #1a1a1a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: default;
+}
+
+.skill-circle span {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1.4;
+}
+
+/* Hover effect for badges */
+.skill-circle:hover {
+    transform: scale(1.1);
+    background-color: #000;
+}
+
+/* Mobile Responsive */
+@media (max-width: 992px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .skills-right {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 50px;
+    }
+
+    .skills-description p {
+        max-width: 100%;
+    }
+}
+/* --- PAGE 4: WORK EXPERIENCE --- */
+
+.experience-section {
+    min-height: 100vh;
+    padding: 100px 10%;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 80px;
+}
+
+.section-main-title {
+    font-size: clamp(3.5rem, 10vw, 6rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -3px;
+}
+
+.number-box-right {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 5px 15px;
+    border: 1px solid #000;
+}
+
+/* Split Grid Layout */
+.experience-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr; /* Date on left, Text on right */
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* Left Date Column */
+.exp-date-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 150px;
+}
+
+.exp-year {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #1a1a1a;
+}
+
+.exp-months {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-top: 5px;
+}
+
+/* Right Details Column */
+.job-role {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.job-link {
+    display: block;
+    font-size: 1.1rem;
+    color: #444;
+    text-decoration: none;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+.job-description p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #222;
+    text-transform: uppercase; /* Matches screenshot style */
+    text-align: justify;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 850px) {
+    .experience-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+    
+    .exp-date-col {
+        align-items: flex-start;
+        text-align: left;
+    }
+}
+/* --- PAGE 5: PROJECTS SECTION --- */
+
+.projects-section {
+    min-height: 100vh;
+    padding: 100px 10%;
+    background-color: #f8f8f8;
+}
+
+.projects-container {
+    width: 100%;
+}
+
+.projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 60px;
+}
+
+/* Grid Layout: 2 Columns */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+/* Individual Box Styling */
+.project-box {
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 40px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 320px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Individual Lift on Hover */
+.project-box:hover {
+    background-color: #ffffff;
+    border-color: #000;
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+}
+
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.p-number {
+    font-weight: 700;
+    color: #888;
+}
+
+.p-category {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #555;
+}
+
+.box-content h3 {
+    font-size: 1.7rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+    line-height: 1.1;
+}
+
+.box-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #444;
+}
+
+/* Footer with GitHub Logo */
+.box-footer {
+    margin-top: auto;
+    padding-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.github-link-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.github-link-wrapper span {
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.footer-github-icon {
+    width: 20px;
+    height: 20px;
+    filter: grayscale(100%);
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.box-footer .arrow {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+/* Hover States for Footer Elements */
+.project-box:hover .footer-github-icon {
+    filter: grayscale(0%);
+    transform: scale(1.15);
+}
+
+.project-box:hover .arrow {
+    transform: translateX(6px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* --- PAGE 06: KINETIC CONTACT SECTION --- */
+
+.contact-section {
+    min-height: 100vh;
+    padding: 100px 10% 40px 10%;
+    background-color: #f8f8f8;
+}
+
+.kinetic-contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 400px);
+    gap: 0; /* No gap for a seamless grid look */
+    border: 1px solid #000;
+    margin-top: 50px;
+}
+
+.contact-zone {
+    padding: 40px;
+    border: 0.5px solid #000;
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.zone-tag {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.zone-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -2px;
+    transition: all 0.5s ease;
+}
+
+/* --- THE UNIQUE ANIMATIONS --- */
+
+/* Zone 1: Invert Animation */
+.zone-invert:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Zone 2: Stagger/Stretch Animation */
+.zone-stretch:hover .zone-title {
+    letter-spacing: 2px;
+    transform: scaleY(1.1);
+}
+
+/* Zone 3: Marquee Animation */
+.marquee-sub {
+    position: absolute;
+    bottom: -30px;
+    white-space: nowrap;
+    font-weight: 900;
+    font-size: 4rem;
+    opacity: 0.05;
+    transition: bottom 0.5s ease, opacity 0.5s ease;
+}
+.zone-marquee:hover .marquee-sub {
+    bottom: 20px;
+    opacity: 0.2;
+}
+
+/* Zone 4: Soft Blur */
+.zone-blur:hover .zone-title {
+    filter: blur(4px);
+    opacity: 0.5;
+}
+.zone-blur:hover::after {
+    content: 'LET\'S CONNECT';
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+    .kinetic-contact-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .contact-zone { height: 300px; }
+}
+/* --- CUSTOM TRAILING CURSOR --- */
+
+/* 1. Hide default cursor */
+body, a, button, .project-box, .nav-item, .contact-card, .contact-zone, .project-row {
+    cursor: none !important;
+}
+
+/* 2. Base Cursor Style */
+.cursor-trail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 99999; /* Max priority */
+}
+
+.cursor-node {
+    position: fixed;
+    /* Ensure these have a size immediately */
+    width: 13px; 
+    height: 13px; 
+    background-color: var(--cursor-fill, #444); /* Uses theme variable or black */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    display: block !important; /* Force visibility */
+    transition: width 0.3s, height 0.3s, opacity 0.3s, clip-path 0.3s, background-color 0.3s;
+}
+
+/* Ensure visibility on both themes */
+[data-theme="dark"] .cursor-node {
+    background-color: #ffffff !important;
+}
+
+/* Ensure the Toggle Button is even higher and interactive */
+.theme-switch-wrapper {
+    position: fixed;
+    top: 30px;
+    right: 5%;
+    z-index: 10001; /* Higher than the cursor (9999) */
+    pointer-events: auto; /* Force it to accept clicks */
+}
+
+.theme-oval-btn {
+    pointer-events: auto; /* Ensure button receives the click */
+    cursor: none; /* Keep the custom cursor visual */
+}
+
+/* Trailing dots sizes */
+.cursor-node:nth-child(2) { opacity: 0.6; width: 10px; height: 10px; }
+.cursor-node:nth-child(3) { opacity: 0.4; width: 8px; height: 8px; }
+.cursor-node:nth-child(4) { opacity: 0.2; width: 6px; height: 6px; }
+.cursor-node:nth-child(5) { opacity: 0.1; width: 4px; height: 4px; }
+
+/* --- THE TRANSFORMATION ON HOVER --- */
+
+/* When 'active', main node becomes a #444 arrow pointer */
+.cursor-trail.active .cursor-node.main {
+    width: 28px;
+    height: 28px;
+    background-color: #444; /* Your requested color */
+    border-radius: 0;      /* Clear circle shape for polygon */
+    
+    /* Arrow Pointer Shape */
+    clip-path: polygon(0% 0%, 0% 100%, 30% 70%, 100% 70%);
+    
+    /* Center the arrow tip on mouse coordinates and tilt slightly */
+    transform: translate(-10%, -10%) rotate(-15deg);
+}
+
+/* Hide trailing dots when selecting (hovering) */
+.cursor-trail.active .cursor-node:not(.main) {
+    opacity: 0;
+}
+/* --- THEME VARIABLES --- */
+:root {
+    --bg-color: #f8f8f8;
+    --text-color: #000000;
+    --card-bg: #ffffff;
+    --border-color: rgba(0,0,0,0.1);
+    --cursor-color: #000000;
+}
+
+[data-theme="dark"] {
+    --bg-color: #0a0a0a;
+    --text-color: #f8f8f8;
+    --card-bg: #141414;
+    --border-color: rgba(255,255,255,0.1);
+    --cursor-color: #ffffff;
+}
+
+/* Apply variables to the whole site */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+/* 1. The Container: This hides the text while it's "below" the line */
+.main-name {
+    overflow: hidden;
+    line-height: 1.1; /* Adjust if the top of the letters get cut off */
+    display: block;
+}
+
+/* 2. Common styles for both spans */
+.main-name span {
+    display: inline-block; /* Required for transform to work */
+    transform: translateY(110%); /* Start hidden below */
+    opacity: 0;
+    animation: slideUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+/* 3. Stagger the timing */
+.white-text {
+    animation-delay: 0.1s; /* Starts almost immediately */
+}
+
+.black-text {
+    animation-delay: 0.3s; /* Starts slightly after "I'm" */
+}
+
+/* 4. The Animation Keyframes */
+@keyframes slideUp {
+    from { 
+        transform: translateY(110%); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translateY(0); 
+        opacity: 1; 
+    }
+}
+/* Update the color here */
+.copyright-text {
+    color: #333333; /* Change this to your preferred hex code */
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-top: 40px;
+    opacity: 0.6; /* Optional: makes it look more subtle */
+}
