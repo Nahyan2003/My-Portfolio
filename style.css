@@ -859,3 +859,75 @@ body {
     margin-top: 40px;
     opacity: 0.6; /* Optional: makes it look more subtle */
 }
+
+/* --- MOVING BORDER NAVBAR (OLD STYLE + BLACK LIGHT) --- */
+.main-nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    max-width: 800px; /* Wider to fit all links */
+    height: 40px;
+    background: #e5e5e5; /* Restored original light grey */
+    backdrop-filter: blur(10px);
+    border-radius: 999px; /* Pill shape from image 1 */
+    overflow: hidden; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* The Black Moving Light */
+.nav-border-glow {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 60%,
+        #000000 80%, /* Change this to your preferred dark color */
+        transparent 100%
+    );
+    animation: rotateBorder 4s linear infinite;
+    z-index: 1;
+}
+
+/* The Inner Mask (Matches Light Grey) */
+.main-nav::after {
+    content: '';
+    position: absolute;
+    inset: 2px; 
+    background: #e5e5e5; /* Restored original light grey */
+    border-radius: 999px;
+    z-index: 2;
+}
+
+.nav-links {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px;
+    z-index: 3;
+}
+
+.nav-item {
+    color: #1a1a1a; /* Dark text for light background */
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 700; /* Boler text as seen in your image */
+    transition: 0.3s;
+    cursor: none;
+}
+
+.nav-item:hover {
+    color: #555; /* Subtle hover effect */
+}
+
+@keyframes rotateBorder {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
