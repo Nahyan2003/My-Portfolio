@@ -13,31 +13,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function animateCursor() {
-        dots[0].x = mouseX;
-        dots[0].y = mouseY;
-        for (let i = 1; i < dots.length; i++) {
-            dots[i].x += (dots[i - 1].x - dots[i].x) * 0.35;
-            dots[i].y += (dots[i - 1].y - dots[i].y) * 0.35;
+        if (dots.length > 0) {
+            dots[0].x = mouseX;
+            dots[0].y = mouseY;
+            for (let i = 1; i < dots.length; i++) {
+                dots[i].x += (dots[i - 1].x - dots[i].x) * 0.35;
+                dots[i].y += (dots[i - 1].y - dots[i].y) * 0.35;
+            }
+            nodes.forEach((node, i) => {
+                node.style.transform = `translate3d(${dots[i].x}px, ${dots[i].y}px, 0) translate(-50%, -50%)`;
+            });
         }
-        nodes.forEach((node, i) => {
-            node.style.transform = `translate3d(${dots[i].x}px, ${dots[i].y}px, 0) translate(-50%, -50%)`;
-        });
         requestAnimationFrame(animateCursor);
     }
     animateCursor();
 
     // --- 2. HOVER DETECTION (Arrow Morph) ---
-    // Add '.contact-item' to the selector list
-const interactables = document.querySelectorAll('a, button, .project-box, .nav-item, .contact-card, .contact-zone, .project-row, .contact-item');
+    // Added .nav-item and .interactive-btn to the list
+    const interactables = document.querySelectorAll('a, button, .project-box, .nav-item, .contact-card, .contact-zone, .project-row, .contact-item, .interactive-btn');
 
-interactables.forEach(item => {
-    item.addEventListener('mouseenter', () => {
-        trail.classList.add('active'); // This turns the dot into the #444 arrow
+    interactables.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            trail.classList.add('active'); // Turns dot into arrow
+        });
+        item.addEventListener('mouseleave', () => {
+            trail.classList.remove('active');
+        });
     });
-    item.addEventListener('mouseleave', () => {
-        trail.classList.remove('active');
-    });
-});
 
     // --- 3. SCROLL REVEAL ANIMATION ---
     const observer = new IntersectionObserver((entries) => {
