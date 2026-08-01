@@ -56,3 +56,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.scroll-reveal').forEach(section => observer.observe(section));
 });
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.glow-nav');
+    if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+});
+const cursorTrail = document.querySelector('.cursor-trail');
+
+document.addEventListener('mousemove', (e) => {
+    // Detect the exact element under the mouse pointer
+    const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
+    
+    if (hoveredElement && cursorTrail) {
+        // Get the actual computed background color of the element
+        const bgColor = window.getComputedStyle(hoveredElement).backgroundColor;
+        
+        // Check if the element is inside .hero-right or has an orange background
+        // (rgb(255, 95, 21) is the standard CSS RGB equivalent for your orange accent)
+        const isOrangeSection = hoveredElement.closest('.hero-right, .bg-orange, [data-bg="orange"]');
+        const isOrangeBg = bgColor === 'rgb(255, 95, 21)' || bgColor === '#ff5f15';
+
+        if (isOrangeSection || isOrangeBg) {
+            cursorTrail.classList.add('dark-mode');
+        } else {
+            cursorTrail.classList.remove('dark-mode');
+        }
+    }
+});
