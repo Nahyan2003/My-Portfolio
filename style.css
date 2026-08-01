@@ -1,6 +1,21 @@
+/* --- THEME VARIABLES (BLACK & ORANGE) --- */
 :root {
-    --bg-color: #f8f8f8;
-    --accent-color: #000000;
+    --bg-color: #0b0b0b;          /* Pure Dark Background */
+    --surface-color: #141414;     /* Card & Section Container Background */
+    --accent-color: #ff5f15;      /* Electric Vibrant Orange */
+    --accent-hover: #e04e06;      /* Slightly Darker Orange for Hovers */
+    --text-primary: #f5f5f5;      /* Crisp Off-White Text */
+    --text-secondary: #a0a0a0;    /* Muted Grey Text */
+    --border-color: rgba(255, 255, 255, 0.08);
+    --cursor-fill: #ff5f15;
+}
+
+[data-theme="dark"] {
+    --bg-color: #0b0b0b;
+    --text-color: #f5f5f5;
+    --card-bg: #141414;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --cursor-color: #ff5f15;
 }
 
 html {
@@ -11,98 +26,275 @@ body {
     margin: 0;
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
+    color: var(--text-primary);
     overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* --- NAVIGATION BAR --- */
-.navbar {
+/* ==========================================================================
+   NAVIGATION BAR (FRAMELESS & SHIFTED LEFT)
+   ========================================================================== */
+.glow-nav {
     position: fixed;
-    top: 20px;
-    left: 50%;
+    top: 25px;
+    left: 32%; /* Positioned cleanly over the dark left section */
     transform: translateX(-50%);
     z-index: 1000;
-    padding: 15px 40px;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    /* Remove transform from here so the whole bar stays still */
-}
-
-.nav-links {
     display: flex;
-    gap: 30px;
+    align-items: center;
+    gap: 28px;
+    padding: 10px 0;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
 }
 
-.nav-item {
+.glow-nav-item {
+    position: relative;
+    color: #ffffff; /* White text for contrast against dark background */
     text-decoration: none;
-    color: #1a1a1a;
-    font-weight: 600;
-    font-size: 0.9rem;
-    position: relative; /* Needed for the underline position */
-    display: inline-block;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 1300; /* Standard maximum font-weight */
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 4px;
+    cursor: none !important;
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Individual Content Moves Upward */
-.nav-item:hover {
-    transform: translateY(-5px); /* Moves Home, About, etc. UP individually */
-    color: #000;
+/* Switches text to pure white when scrolled over dark sections */
+.glow-nav.scrolled .glow-nav-item {
+    color: #ffffff;
 }
 
-/* Small line under each content */
-.nav-item::after {
+/* Hover & Glow Interactions */
+.glow-nav-item:hover {
+    color: var(--accent-color) !important; /* Signature vibrant orange */
+    transform: translateY(-3px);
+    text-shadow: 
+        0 0 8px var(--accent-color),
+        0 0 20px rgba(255, 95, 21, 0.6);
+}
+
+/* Radial Backdrop Glow Behind Text on Hover */
+.glow-nav-item::before {
     content: '';
     position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -5px;
-    left: 0;
-    background-color: #000;
-    transition: width 0.3s ease;
-}
-
-.nav-item:hover::after {
-    width: 100%; /* Line grows from left to right on hover */
-}
-
-/* --- HERO SECTION --- */
-.hero-section {
-    width: 100%;
-    height: 65vh;
-    position: relative;
-}
-
-.image-wrapper {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
     width: 100%;
     height: 100%;
-    position: relative;
+    background: radial-gradient(circle, rgba(255, 95, 21, 0.35) 0%, rgba(255, 95, 21, 0) 70%);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: -1;
+}
+
+.glow-nav-item:hover::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.6);
+}
+
+/* Underline Indicator Strip on Hover */
+.glow-nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 80%;
+    height: 2px;
+    background-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color);
+    border-radius: 2px;
+    transition: transform 0.3s ease;
+}
+
+.glow-nav-item:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+
+/* ==========================================================================
+   HERO SECTION (ASYMMETRIC SPLIT DESIGN)
+   ========================================================================== */
+.split-hero {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #0b0b0b;
     overflow: hidden;
 }
 
-.main-img {
-    width: 100%;
-    height: 150%;
-    object-fit: cover;
-    filter: grayscale(100%);
+/* LEFT SIDE: EXPANDED DARK CONTAINER (~65% WIDTH) */
+.hero-left {
+    flex: 1.6;
+    background-color: #141414;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 100px 40px 60px 40px;
 }
 
-.title-overlay {
+/* --- GRAPHIC WRAPPER & IMAGE SCALING --- */
+.graphic-wrapper {
+    position: relative;
+    width: 480px;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Background Geometric Shapes */
+.circle-accent {
     position: absolute;
-    top: 57%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
+    width: 420px;
+    height: 420px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 0 50px rgba(255, 95, 21, 0.25);
 }
 
-.main-name {
-    font-size: clamp(3rem, 12vw, 8rem);
+.half-circle-accent {
+    position: absolute;
+    top: 25px;
+    left: -30px;
+    width: 120px;
+    height: 60px;
+    background-color: var(--accent-color);
+    border-top-left-radius: 120px;
+    border-top-right-radius: 120px;
+    z-index: 1;
+}
+
+.dots-pattern {
+    position: absolute;
+    right: 95px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 160px;
+    background-image: radial-gradient(#000000 20%, transparent 20%);
+    background-size: 10px 10px;
+    z-index: 2;
+    opacity: 0.75;
+}
+
+/* --- TRANSPARENT SUBJECT OVERLAY --- */
+.hero-person-img {
+    position: relative;
+    z-index: 3;
+    width: 350px; /* Reduced width to scale down perfectly inside the circle */
+    height: 350px;
+    object-fit: cover;
+    object-position: top center; /* Keeps face centered */
+    border-radius: 50%; /* Crops bottom jacket edges into a clean circular frame */
+    filter: grayscale(100%) contrast(115%);
+    margin: 0 auto;
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.hero-left:hover .hero-person-img {
+    filter: grayscale(0%) contrast(105%);
+    transform: scale(1.03);
+}
+
+/* RIGHT SIDE: NARROWER ORANGE PANEL (~35% WIDTH) */
+.hero-right {
+    flex: 0.85;
+    background-color: var(--accent-color); /* Vibrant Orange */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 6% 60px 6%;
+    color: #000000;
+}
+
+.hero-content {
+    max-width: 420px;
+}
+
+.hero-heading {
+    font-size: clamp(2.2rem, 4.2vw, 3.5rem);
     font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: #ffffff;
+    margin-bottom: 24px;
 }
 
-.white-text { color: white; }
-.black-text { color: rgba(0,0,0,0.8); margin-left: -10px; }
+.hero-heading span {
+    color: #000000;
+}
 
+.hero-subtext {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    margin-bottom: 36px;
+}
+
+/* Call To Action Button */
+.hero-cta-btn {
+    display: inline-block;
+    padding: 16px 36px;
+    background-color: #ffffff;
+    color: #000000;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.hero-cta-btn:hover {
+    background-color: #000000;
+    color: #ffffff;
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   RESPONSIVE MOBILE LAYOUT
+   ========================================================================== */
+@media (max-width: 992px) {
+    .glow-nav {
+        left: 50%;
+        width: 100%;
+        justify-content: center;
+        gap: 16px;
+    }
+    .split-hero {
+        flex-direction: column;
+    }
+    .hero-left, .hero-right {
+        flex: none;
+        width: 100%;
+        padding: 80px 5% 40px 5%;
+    }
+    .graphic-wrapper {
+        width: 280px;
+        height: 280px;
+    }
+    .circle-accent {
+        width: 240px;
+        height: 240px;
+    }
+    .hero-person-img {
+        height: 115%;
+    }
+}
 /* --- PAGE 1 CONTENT --- */
 .content-section {
     max-width: 1100px;
@@ -114,14 +306,14 @@ body {
     margin-bottom: -10px;
     font-size: 2.2rem;
     font-weight: 900;
-    color: #1a1a1a;
+    color: var(--text-primary);
 }
 
 .bio-text {
     font-size: 1.3rem;
     line-height: 1.6;
     margin: 25px 0 50px 0;
-    color: #444;
+    color: var(--text-secondary);
 }
 
 /* --- RESUME BUTTON --- */
@@ -129,16 +321,17 @@ body {
     display: inline-flex;
     padding: 25px 60px;
     background-color: var(--accent-color);
-    color: #fff;
+    color: #000;
     text-decoration: none;
     border-radius: 100px;
-    font-weight: 700;
+    font-weight: 800;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .resume-oval:hover {
     transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    background-color: #ffffff;
+    box-shadow: 0 15px 30px rgba(255, 95, 21, 0.3);
 }
 
 /* --- CONTACT & SOCIAL BAR --- */
@@ -148,11 +341,10 @@ body {
     align-items: center;
     margin-top: 50px;
     padding-top: 30px;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid var(--border-color);
     width: 100%;
 }
 
-/* Left Side: Contact Styling */
 .contact-info-left {
     display: flex;
     gap: 35px; 
@@ -163,7 +355,7 @@ body {
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    cursor: none !important; /* Hides default mouse */
+    cursor: none !important;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -176,37 +368,41 @@ body {
     height: 22px;
     object-fit: contain;
     pointer-events: none; 
+    filter: invert(1);
 }
 
 .contact-text {
     font-family: 'Inter', sans-serif;
     font-size: 1.05rem;
     font-weight: 500;
-    color: #1a1a1a;
+    color: var(--text-primary);
     letter-spacing: -0.2px;
     pointer-events: none;
 }
 
-/* Right Side: Social Icons Styling */
+.contact-item:hover .contact-text {
+    color: var(--accent-color);
+}
+
 .social-icons-right {
     display: flex;
-    flex-direction: row; /* Force horizontal alignment */
+    flex-direction: row;
     gap: 15px;
     align-items: center;
 }
 
 .social-icon-link {
-    display: flex; /* Changed from inline-block for better alignment */
+    display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
-    filter: grayscale(100%);
-    cursor: none !important; /* Hides default mouse for custom cursor */
+    filter: brightness(0) invert(1);
+    cursor: none !important;
 }
 
 .social-icon-link:hover {
     transform: translateY(-8px);
-    filter: grayscale(0%);
+    filter: none; /* Shows natural icon colors on hover */
 }
 
 .social-icon-link img {
@@ -215,39 +411,14 @@ body {
     pointer-events: none;
 }
 
-/* --- Responsive Fix --- */
-@media (max-width: 800px) { /* Lowered threshold so it doesn't stack too early */
-    .contact-social-bar {
-        flex-direction: column;
-        gap: 30px;
-        align-items: center; /* Center everything on mobile */
-        text-align: center;
-    }
-    
-    .contact-info-left {
-        flex-direction: column; /* Stacks email and phone on mobile */
-        gap: 20px;
-        align-items: center;
-    }
-
-    .social-icons-right {
-        justify-content: center;
-    }
-}
-
-/* --- PAGE 2: WHO I AM (CLEAN WIDE STYLE) --- */
-
+/* --- PAGE 2: WHO I AM --- */
 .about-section {
     min-height: 100vh;
-    padding: 120px 10%; /* The 10% horizontal padding you requested */
-    background-color: #f8f8f8;
+    padding: 120px 10%;
+    background-color: var(--bg-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.about-top-meta {
-    margin-bottom: 20px;
 }
 
 .about-title {
@@ -256,10 +427,11 @@ body {
     margin-bottom: 5px;
     letter-spacing: -3px;
     line-height: 1;
+    color: var(--accent-color);
 }
 
 .padding-note {
-    color: #999;
+    color: var(--text-secondary);
     font-size: 1.1rem;
     margin-bottom: 60px;
     text-transform: uppercase;
@@ -268,41 +440,23 @@ body {
 
 .about-description-wide {
     width: 100%;
-    max-width: 1200px; /* Limits width just enough so lines aren't TOO long to read */
+    max-width: 1200px;
 }
 
 .about-description-wide p {
-    font-size: 1.1rem; /* Larger font size for that 'big' feel */
-    line-height: 1.7;   /* Clean line spacing */
-    color: #444;
-    margin-bottom: 40px; /* Space between the long paragraphs */
-    text-align: left;    /* Keeps the modern clean-left edge */
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    text-align: left;
     word-spacing: 1px;
 }
 
-/* Scroll Animation Consistency */
-.scroll-reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-.scroll-reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-/* Mobile Fix */
-@media (max-width: 768px) {
-    .about-content-grid {
-        grid-template-columns: 1fr;
-    }
-}
 /* --- PAGE 3: PERSONAL SKILLS --- */
-
 .skills-section {
     min-height: 100vh;
     padding: 100px 10%;
-    background-color: #f8f8f8;
+    background-color: var(--bg-color);
     display: flex;
     align-items: center;
 }
@@ -313,12 +467,11 @@ body {
 
 .skills-grid {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr; /* Text on left, Circles on right */
+    grid-template-columns: 1.2fr 0.8fr;
     gap: 80px;
     align-items: center;
 }
 
-/* Left Side Styling */
 .skills-title {
     font-size: clamp(3.5rem, 10vw, 6rem);
     font-weight: 900;
@@ -330,12 +483,11 @@ body {
 .skills-description p {
     font-size: 1.4rem;
     line-height: 1.6;
-    color: #333;
-    text-transform: uppercase; /* Matches screenshot style */
+    color: var(--text-secondary);
+    text-transform: uppercase;
     max-width: 90%;
 }
 
-/* Right Side: Circular Badges */
 .skills-right {
     display: flex;
     flex-direction: column;
@@ -346,14 +498,15 @@ body {
 .skill-circle {
     width: 180px;
     height: 180px;
-    background-color: #1a1a1a;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #fff;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: var(--text-primary);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, border-color 0.3s ease;
     cursor: default;
 }
 
@@ -364,36 +517,18 @@ body {
     line-height: 1.4;
 }
 
-/* Hover effect for badges */
 .skill-circle:hover {
     transform: scale(1.1);
-    background-color: #000;
+    background-color: var(--accent-color);
+    color: #000;
+    border-color: var(--accent-color);
 }
 
-/* Mobile Responsive */
-@media (max-width: 992px) {
-    .skills-grid {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    
-    .skills-right {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-top: 50px;
-    }
-
-    .skills-description p {
-        max-width: 100%;
-    }
-}
 /* --- PAGE 4: WORK EXPERIENCE --- */
-
 .experience-section {
     min-height: 100vh;
     padding: 100px 10%;
-    background-color: #f8f8f8;
+    background-color: var(--bg-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -418,18 +553,17 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
     padding: 5px 15px;
-    border: 1px solid #000;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
 }
 
-/* Split Grid Layout */
 .experience-grid {
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr; /* Date on left, Text on right */
+    grid-template-columns: 0.8fr 1.2fr;
     gap: 40px;
     align-items: flex-start;
 }
 
-/* Left Date Column */
 .exp-date-col {
     display: flex;
     flex-direction: column;
@@ -441,27 +575,27 @@ body {
 .exp-year {
     font-size: 3rem;
     font-weight: 900;
-    color: #1a1a1a;
+    color: var(--accent-color);
 }
 
 .exp-months {
     font-size: 2rem;
     font-weight: 700;
-    color: #333;
+    color: var(--text-secondary);
     margin-top: 5px;
 }
 
-/* Right Details Column */
 .job-role {
     font-size: 2.2rem;
     font-weight: 800;
     margin-bottom: 10px;
+    color: var(--text-primary);
 }
 
 .job-link {
     display: block;
     font-size: 1.1rem;
-    color: #444;
+    color: var(--accent-color);
     text-decoration: none;
     margin-bottom: 40px;
     letter-spacing: 1px;
@@ -470,29 +604,16 @@ body {
 .job-description p {
     font-size: 1rem;
     line-height: 1.6;
-    color: #222;
-    text-transform: uppercase; /* Matches screenshot style */
+    color: var(--text-secondary);
+    text-transform: uppercase;
     text-align: justify;
 }
 
-/* Mobile Adjustments */
-@media (max-width: 850px) {
-    .experience-grid {
-        grid-template-columns: 1fr;
-        gap: 60px;
-    }
-    
-    .exp-date-col {
-        align-items: flex-start;
-        text-align: left;
-    }
-}
 /* --- PAGE 5: PROJECTS SECTION --- */
-
 .projects-section {
     min-height: 100vh;
     padding: 100px 10%;
-    background-color: #f8f8f8;
+    background-color: var(--bg-color);
 }
 
 .projects-container {
@@ -506,17 +627,15 @@ body {
     margin-bottom: 60px;
 }
 
-/* Grid Layout: 2 Columns */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
 }
 
-/* Individual Box Styling */
 .project-box {
-    background: transparent;
-    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
     padding: 40px;
     text-decoration: none;
     color: inherit;
@@ -527,12 +646,11 @@ body {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Individual Lift on Hover */
 .project-box:hover {
-    background-color: #ffffff;
-    border-color: #000;
+    background-color: #1a1a1a;
+    border-color: var(--accent-color);
     transform: translateY(-12px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    box-shadow: 0 20px 40px rgba(255, 95, 21, 0.1);
 }
 
 .box-header {
@@ -543,7 +661,7 @@ body {
 
 .p-number {
     font-weight: 700;
-    color: #888;
+    color: var(--accent-color);
 }
 
 .p-category {
@@ -551,7 +669,7 @@ body {
     font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: #555;
+    color: var(--text-secondary);
 }
 
 .box-content h3 {
@@ -560,22 +678,22 @@ body {
     letter-spacing: -1px;
     margin-bottom: 15px;
     line-height: 1.1;
+    color: var(--text-primary);
 }
 
 .box-content p {
     font-size: 1rem;
     line-height: 1.6;
-    color: #444;
+    color: var(--text-secondary);
 }
 
-/* Footer with GitHub Logo */
 .box-footer {
     margin-top: auto;
     padding-top: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid rgba(0,0,0,0.05);
+    border-top: 1px solid var(--border-color);
 }
 
 .github-link-wrapper {
@@ -593,18 +711,17 @@ body {
 .footer-github-icon {
     width: 20px;
     height: 20px;
-    filter: grayscale(100%);
+    filter: brightness(0) invert(1);
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .box-footer .arrow {
     font-size: 1.2rem;
+    color: var(--accent-color);
     transition: transform 0.3s ease;
 }
 
-/* Hover States for Footer Elements */
 .project-box:hover .footer-github-icon {
-    filter: grayscale(0%);
     transform: scale(1.15);
 }
 
@@ -612,39 +729,33 @@ body {
     transform: translateX(6px);
 }
 
-/* Mobile Responsive */
-@media (max-width: 900px) {
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-}
 /* --- PAGE 06: KINETIC CONTACT SECTION --- */
-
 .contact-section {
     min-height: 100vh;
     padding: 100px 10% 40px 10%;
-    background-color: #f8f8f8;
+    background-color: var(--bg-color);
 }
 
 .kinetic-contact-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 400px);
-    gap: 0; /* No gap for a seamless grid look */
-    border: 1px solid #000;
+    gap: 0;
+    border: 1px solid var(--border-color);
     margin-top: 50px;
 }
 
 .contact-zone {
     padding: 40px;
-    border: 0.5px solid #000;
+    border: 0.5px solid var(--border-color);
     text-decoration: none;
-    color: #000;
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     position: relative;
     overflow: hidden;
+    background-color: var(--surface-color);
     transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -654,6 +765,7 @@ body {
     letter-spacing: 2px;
     margin-bottom: 20px;
     display: block;
+    color: var(--accent-color);
 }
 
 .zone-title {
@@ -664,21 +776,21 @@ body {
     transition: all 0.5s ease;
 }
 
-/* --- THE UNIQUE ANIMATIONS --- */
-
-/* Zone 1: Invert Animation */
+/* Kinetic Hover Animations */
 .zone-invert:hover {
-    background-color: #000;
-    color: #fff;
+    background-color: var(--accent-color);
+    color: #000;
+}
+.zone-invert:hover .zone-tag {
+    color: #000;
 }
 
-/* Zone 2: Stagger/Stretch Animation */
 .zone-stretch:hover .zone-title {
     letter-spacing: 2px;
     transform: scaleY(1.1);
+    color: var(--accent-color);
 }
 
-/* Zone 3: Marquee Animation */
 .marquee-sub {
     position: absolute;
     bottom: -30px;
@@ -686,17 +798,17 @@ body {
     font-weight: 900;
     font-size: 4rem;
     opacity: 0.05;
+    color: var(--accent-color);
     transition: bottom 0.5s ease, opacity 0.5s ease;
 }
 .zone-marquee:hover .marquee-sub {
     bottom: 20px;
-    opacity: 0.2;
+    opacity: 0.25;
 }
 
-/* Zone 4: Soft Blur */
 .zone-blur:hover .zone-title {
     filter: blur(4px);
-    opacity: 0.5;
+    opacity: 0.3;
 }
 .zone-blur:hover::after {
     content: 'LET\'S CONNECT';
@@ -705,230 +817,142 @@ body {
     transform: translate(-50%, -50%);
     font-weight: 900;
     font-size: 2rem;
+    color: var(--accent-color);
 }
 
-/* Mobile Responsive */
-@media (max-width: 900px) {
-    .kinetic-contact-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-    }
-    .contact-zone { height: 300px; }
+/* --- FOOTER & COPYRIGHT --- */
+.copyright-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-top: 40px;
+    opacity: 0.6;
 }
+
 /* --- CUSTOM TRAILING CURSOR --- */
-
-/* 1. Hide default cursor */
 body, a, button, .project-box, .nav-item, .contact-card, .contact-zone, .project-row {
     cursor: none !important;
 }
 
-/* 2. Base Cursor Style */
 .cursor-trail {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 99999; /* Max priority */
+    pointer-events: none !important; /* Prevents cursor from blocking hover events */
+    z-index: 99999;
 }
 
 .cursor-node {
     position: fixed;
-    /* Ensure these have a size immediately */
     width: 13px; 
     height: 13px; 
-    background-color: var(--cursor-fill, #444); /* Uses theme variable or black */
+    background-color: var(--accent-color); /* Default Orange */
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    pointer-events: none;
-    display: block !important; /* Force visibility */
-    transition: width 0.3s, height 0.3s, opacity 0.3s, clip-path 0.3s, background-color 0.3s;
+    pointer-events: none !important;
+    display: block !important;
+    transition: width 0.3s, height 0.3s, opacity 0.3s, clip-path 0.3s, background-color 0.2s ease;
 }
 
-/* Ensure visibility on both themes */
-[data-theme="dark"] .cursor-node {
-    background-color: #ffffff !important;
+/* TURN CURSOR & ALL TRAIL NODES BLACK OVER ORANGE */
+.cursor-trail.dark-mode .cursor-node {
+    background-color: #000000 !important;
 }
 
-/* Ensure the Toggle Button is even higher and interactive */
-.theme-switch-wrapper {
-    position: fixed;
-    top: 30px;
-    right: 5%;
-    z-index: 10001; /* Higher than the cursor (9999) */
-    pointer-events: auto; /* Force it to accept clicks */
+.cursor-trail.dark-mode .cursor-node.main {
+    background-color: #000000 !important;
 }
 
-.theme-oval-btn {
-    pointer-events: auto; /* Ensure button receives the click */
-    cursor: none; /* Keep the custom cursor visual */
+.cursor-trail.active .cursor-node.main {
+    width: 28px;
+    height: 28px;
+    background-color: var(--accent-color);
+    border-radius: 0;
+    clip-path: polygon(0% 0%, 0% 100%, 30% 70%, 100% 70%);
+    transform: translate(-10%, -10%) rotate(-15deg);
 }
 
-/* Trailing dots sizes */
+.cursor-trail.active.dark-mode .cursor-node.main {
+    background-color: #000000 !important;
+}
+
+.cursor-trail.active .cursor-node:not(.main) {
+    opacity: 0;
+}
+
 .cursor-node:nth-child(2) { opacity: 0.6; width: 10px; height: 10px; }
 .cursor-node:nth-child(3) { opacity: 0.4; width: 8px; height: 8px; }
 .cursor-node:nth-child(4) { opacity: 0.2; width: 6px; height: 6px; }
 .cursor-node:nth-child(5) { opacity: 0.1; width: 4px; height: 4px; }
 
-/* --- THE TRANSFORMATION ON HOVER --- */
-
-/* When 'active', main node becomes a #444 arrow pointer */
-.cursor-trail.active .cursor-node.main {
-    width: 28px;
-    height: 28px;
-    background-color: #444; /* Your requested color */
-    border-radius: 0;      /* Clear circle shape for polygon */
-    
-    /* Arrow Pointer Shape */
-    clip-path: polygon(0% 0%, 0% 100%, 30% 70%, 100% 70%);
-    
-    /* Center the arrow tip on mouse coordinates and tilt slightly */
-    transform: translate(-10%, -10%) rotate(-15deg);
-}
-
-/* Hide trailing dots when selecting (hovering) */
-.cursor-trail.active .cursor-node:not(.main) {
-    opacity: 0;
-}
-/* --- THEME VARIABLES --- */
-:root {
-    --bg-color: #f8f8f8;
-    --text-color: #000000;
-    --card-bg: #ffffff;
-    --border-color: rgba(0,0,0,0.1);
-    --cursor-color: #000000;
-}
-
-[data-theme="dark"] {
-    --bg-color: #0a0a0a;
-    --text-color: #f8f8f8;
-    --card-bg: #141414;
-    --border-color: rgba(255,255,255,0.1);
-    --cursor-color: #ffffff;
-}
-
-/* Apply variables to the whole site */
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.5s ease, color 0.5s ease;
-}
-/* 1. The Container: This hides the text while it's "below" the line */
-.main-name {
-    overflow: hidden;
-    line-height: 1.1; /* Adjust if the top of the letters get cut off */
-    display: block;
-}
-
-/* 2. Common styles for both spans */
-.main-name span {
-    display: inline-block; /* Required for transform to work */
-    transform: translateY(110%); /* Start hidden below */
-    opacity: 0;
-    animation: slideUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-}
-
-/* 3. Stagger the timing */
-.white-text {
-    animation-delay: 0.1s; /* Starts almost immediately */
-}
-
-.black-text {
-    animation-delay: 0.3s; /* Starts slightly after "I'm" */
-}
-
-/* 4. The Animation Keyframes */
-@keyframes slideUp {
-    from { 
-        transform: translateY(110%); 
-        opacity: 0; 
+/* --- RESPONSIVE MEDIA QUERIES --- */
+@media (max-width: 992px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
     }
-    to { 
-        transform: translateY(0); 
-        opacity: 1; 
+    
+    .skills-right {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 50px;
+    }
+
+    .skills-description p {
+        max-width: 100%;
     }
 }
-/* Update the color here */
-.copyright-text {
-    color: #333333; /* Change this to your preferred hex code */
-    font-size: 0.9rem;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: 1px;
-    text-align: center;
-    margin-top: 40px;
-    opacity: 0.6; /* Optional: makes it look more subtle */
+
+@media (max-width: 900px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kinetic-contact-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .contact-zone { height: 300px; }
 }
 
-/* --- MOVING BORDER NAVBAR (OLD STYLE + BLACK LIGHT) --- */
-.main-nav {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40%;
-    max-width: 800px; /* Wider to fit all links */
-    height: 40px;
-    background: #e5e5e5; /* Restored original light grey */
-    backdrop-filter: blur(10px);
-    border-radius: 999px; /* Pill shape from image 1 */
-    overflow: hidden; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+@media (max-width: 850px) {
+    .experience-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+    
+    .exp-date-col {
+        align-items: flex-start;
+        text-align: left;
+    }
 }
 
-/* The Black Moving Light */
-.nav-border-glow {
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(
-        from 0deg,
-        transparent 60%,
-        #000000 80%, /* Change this to your preferred dark color */
-        transparent 100%
-    );
-    animation: rotateBorder 4s linear infinite;
-    z-index: 1;
+@media (max-width: 800px) {
+    .contact-social-bar {
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .contact-info-left {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .social-icons-right {
+        justify-content: center;
+    }
 }
 
-/* The Inner Mask (Matches Light Grey) */
-.main-nav::after {
-    content: '';
-    position: absolute;
-    inset: 2px; 
-    background: #e5e5e5; /* Restored original light grey */
-    border-radius: 999px;
-    z-index: 2;
+@media (max-width: 768px) {
+    .about-content-grid {
+        grid-template-columns: 1fr;
+    }
 }
-
-.nav-links {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    padding: 0 20px;
-    z-index: 3;
-}
-
-.nav-item {
-    color: #1a1a1a; /* Dark text for light background */
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 700; /* Boler text as seen in your image */
-    transition: 0.3s;
-    cursor: none;
-}
-
-.nav-item:hover {
-    color: #555; /* Subtle hover effect */
-}
-
-@keyframes rotateBorder {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
